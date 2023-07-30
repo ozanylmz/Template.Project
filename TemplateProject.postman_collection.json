@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "bca4ec81-30e5-4216-b471-5e88251f7d60",
+		"name": "TemplateProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"address\": {}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5149/api/Customer/64c64fcc005215e1676304c9/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5149",
+							"path": [
+								"api",
+								"Customer",
+								"64c64fcc005215e1676304c9",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5149/api/Customer?Id=64c64fcc005215e1676304c8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5149",
+							"path": [
+								"api",
+								"Customer"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "64c64fcc005215e1676304c8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ozan\",\n  \"surname\": \"Yılmaz\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5149/api/Customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5149",
+							"path": [
+								"api",
+								"Customer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
