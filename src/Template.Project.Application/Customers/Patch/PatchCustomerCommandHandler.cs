@@ -3,16 +3,16 @@ using Template.Project.Application.Middlewares.Exceptions;
 using Template.Project.Domain.AggregateModels.Customer;
 using Template.Project.Domain.Interfaces;
 
-namespace Template.Project.Application.Customers.Update
+namespace Template.Project.Application.Customers.Patch
 {
-    public sealed record UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
+    public sealed record PatchCustomerCommandHandler : IRequestHandler<PatchCustomerCommand>
     {
         private readonly ICustomerRepository _customerRepository;
-        public UpdateCustomerCommandHandler(ICustomerRepository customerRepository)
+        public PatchCustomerCommandHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
         }
-        public async Task<Unit> Handle(UpdateCustomerCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(PatchCustomerCommand command, CancellationToken cancellationToken)
         {
             var customer = await _customerRepository.GetByIdAsync(command.Id);
 
@@ -21,13 +21,16 @@ namespace Template.Project.Application.Customers.Update
                 throw new NotFoundException("Customer was not found!");
             }
 
+            var patchCustomerRequest = new PatchCustomerRequest();
+            command.Request.ApplyTo(patchCustomerRequest);
+
             try
             {
                 var newCustomer = new Customer(
-                    command.Request.Name,
-                    command.Request.Surname,
+                    patchCustomerRequest.Name ?? customer.Name,
+                    patchCustomerRequest.Surname ?? customer.Surname,
                     customer.Status,
-                    null);
+                    patchCustomerRequest.Address ?? customer.Address);
                 newCustomer.SetId(customer.Id);
                 newCustomer.SetCreatedDate(customer.CreatedDate);
                 newCustomer.SetUpdateDate();

@@ -25,8 +25,8 @@ namespace Template.Project.Infrastructure
                     .GetSection(nameof(RedisSettings) + ":" + RedisSettings.ConnectionStringValue).Value);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
-            services.AddSingleton<ICustomerRepository, CustomerRepository>();
-            services.AddSingleton<ICacheService, CacheService>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICacheService, CacheService>();
 
             return services;
         }

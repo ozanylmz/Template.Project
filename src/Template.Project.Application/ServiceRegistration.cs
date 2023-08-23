@@ -13,6 +13,7 @@ namespace Template.Project.Application
             var assm = Assembly.GetExecutingAssembly();
 
             services.AddMediatR(assm);
+            services.AddTransient<GlobalExceptionHandlingMiddlware>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
 
             return services;

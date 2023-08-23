@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Template.Project.Application.Customers.Exceptions;
 using Template.Project.Domain.AggregateModels.Customer;
+using Template.Project.Domain.Enums;
 using Template.Project.Domain.Interfaces;
 
 namespace Template.Project.Application.Customers.Add
@@ -16,14 +16,15 @@ namespace Template.Project.Application.Customers.Add
         {
             try
             {
-                var result = await _customerRepository.AddAsync(new Customer(
+               var result = await _customerRepository.AddAsync(new Customer(
                     command.Name,
                     command.Surname,
+                    CustomerStatus.Active,
                     null));
             }
-            catch (CustomerDomainException ex)
+            catch (Exception ex)
             {
-                throw new CustomerDomainException($"Error : Customer could not be saved! Message : {ex.InnerException}");
+                throw new Exception($"Error : Customer could not be saved! Message : {ex.InnerException}");
             }
 
             return Unit.Value;

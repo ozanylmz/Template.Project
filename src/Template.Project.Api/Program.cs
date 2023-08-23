@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Template.Project.Application;
+using Template.Project.Application.Middlewares;
 using Template.Project.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApiVersioning(opt =>
 {
@@ -31,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseGlobalExceptionHandlingMiddlware();
 
 app.UseAuthorization();
 

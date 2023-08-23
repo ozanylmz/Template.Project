@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Mapster;
 using Template.Project.Domain.Interfaces;
-using Template.Project.Application.Customers.Exceptions;
+using Template.Project.Application.Middlewares.Exceptions;
 
 namespace Template.Project.Application.Customers.Get
 {
@@ -18,7 +18,7 @@ namespace Template.Project.Application.Customers.Get
 
             if (customer is null)
             {
-                throw new CustomerDomainException("Customer was not found!");
+                throw new NotFoundException("Customer was not found!");
             }
 
             return customer.Adapt<CustomerGetByIdResponse>();

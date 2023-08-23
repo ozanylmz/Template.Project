@@ -1,18 +1,19 @@
 ﻿using MediatR;
 using Template.Project.Application.Middlewares.Exceptions;
 using Template.Project.Domain.AggregateModels.Customer;
+using Template.Project.Domain.Enums;
 using Template.Project.Domain.Interfaces;
 
-namespace Template.Project.Application.Customers.Update
+namespace Template.Project.Application.Customers.Cancel
 {
-    public sealed record UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
+    public sealed record CancelCustomerCommandHandler : IRequestHandler<CancelCustomerCommand>
     {
         private readonly ICustomerRepository _customerRepository;
-        public UpdateCustomerCommandHandler(ICustomerRepository customerRepository)
+        public CancelCustomerCommandHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
         }
-        public async Task<Unit> Handle(UpdateCustomerCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CancelCustomerCommand command, CancellationToken cancellationToken)
         {
             var customer = await _customerRepository.GetByIdAsync(command.Id);
 
@@ -24,9 +25,9 @@ namespace Template.Project.Application.Customers.Update
             try
             {
                 var newCustomer = new Customer(
-                    command.Request.Name,
-                    command.Request.Surname,
-                    customer.Status,
+                    customer.Name,
+                    customer.Surname,
+                    CustomerStatus.Passive,
                     null);
                 newCustomer.SetId(customer.Id);
                 newCustomer.SetCreatedDate(customer.CreatedDate);
