@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
+using Template.Project.Application.Customers.Update.Validations;
 using Template.Project.Application.Middlewares.Exceptions;
 using Template.Project.Domain.AggregateModels.Customer;
 using Template.Project.Domain.Interfaces;
@@ -14,6 +16,12 @@ namespace Template.Project.Application.Customers.Update
         }
         public async Task<Unit> Handle(UpdateCustomerCommand command, CancellationToken cancellationToken)
         {
+            var validator = new UpdateCustomerCommandValidator();
+            var validatorResult = validator.Validate(command);
+
+            if (!validatorResult.IsValid)
+                throw new ValidationException(validatorResult.Errors);
+
             var customer = await _customerRepository.GetByIdAsync(command.Id);
 
             if (customer is null)

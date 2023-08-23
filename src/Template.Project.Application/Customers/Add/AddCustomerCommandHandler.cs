@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
+using Template.Project.Application.Customers.Add.Validations;
 using Template.Project.Domain.AggregateModels.Customer;
 using Template.Project.Domain.Enums;
 using Template.Project.Domain.Interfaces;
@@ -14,6 +16,12 @@ namespace Template.Project.Application.Customers.Add
         }
         public async Task<Unit> Handle(AddCustomerCommand command, CancellationToken cancellationToken)
         {
+            var validator = new AddCustomerCommandValidator();
+            var validatorResult = validator.Validate(command);
+
+            if (!validatorResult.IsValid)
+                throw new ValidationException(validatorResult.Errors);
+
             try
             {
                var result = await _customerRepository.AddAsync(new Customer(

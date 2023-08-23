@@ -19,7 +19,10 @@ builder.Services.AddApiVersioning(opt =>
         new HeaderApiVersionReader("x-api-version"),
         new MediaTypeApiVersionReader("x-api-version"));
 });
-
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add<ValidationExceptionFilter>();
+});
 builder.Services.AddSwaggerGen();
 
 builder.Services

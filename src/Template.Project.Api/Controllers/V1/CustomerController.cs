@@ -8,7 +8,7 @@ using Template.Project.Application.Customers.Patch;
 using Template.Project.Application.Customers.Filter;
 using Template.Project.Application.Customers.Update;
 
-namespace Template.Project.Api.Controllers
+namespace Template.Project.Api.Controllers.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
